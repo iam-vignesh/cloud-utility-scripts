@@ -1,4 +1,4 @@
-# main.tf
+#To deploy EC2 and install docker 
 
 # Configure AWS provider
 provider "aws" {
@@ -26,8 +26,8 @@ resource "aws_security_group" "ssh_sg" {
   }
 }
 
-data "aws_key_pair" "api-server-key-v2" {
-  key_name = "api-server-key-v2"  # Replace with your existing key pair name
+data "aws_key_pair" "existing_key" {
+  key_name = "existing_key_name"  # Replace with your existing key pair name
 }
 
 
@@ -48,14 +48,14 @@ resource "aws_instance" "tf-instance" {
   connection {
     type        = "ssh"
     user        = "ubuntu"  # Update with the appropriate user for your AMI
-    private_key = file("~/.ssh/prod-server.pem")  # Update the path to your private key
+    private_key = file("~/.ssh/filename.pem")  # Update the path to your private key
     host        = self.public_ip
   }
 
   # Define provisioner to upload and execute script remotely
   provisioner "remote-exec" {
     # Path to the local script
-    script = "/home/vignesh/bootstrap_docker.sh"
+    script = "script path"
   }
 }
 
